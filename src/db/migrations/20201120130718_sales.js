@@ -4,7 +4,7 @@ exports.up = (knex) =>
     table.uuid('level_id').references('levels.id').notNullable();
     table.float('price', 2).notNullable();
     table.float('cost', 2).notNullable();
-    table.integer('margin').notNullable();
+    table.float('margin', 5).notNullable();
     table.timestamps(true, true);
   });
 
