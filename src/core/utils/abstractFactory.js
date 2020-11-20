@@ -1,7 +1,6 @@
 function abstractFactory(class_map_) {
   return (class_key, ...parameters) => {
-    const class_map = class_map_;
-    const [class_, ..._] = class_map[class_key];
+    const class_ = class_map_[class_key];
     return new class_(...parameters);
   };
 }

@@ -1,4 +1,5 @@
 const { abstractFactory } = require('../utils/abstractFactory');
+const { db } = require('../../db');
 
 class PersistorSingleton {
   static get instance() {
@@ -20,9 +21,8 @@ class PersistorSingleton {
 
     this._persists = {};
 
-    for (const [k, v] of Object.entries(this._persist_class_map)) {
-      const [_, ...parameters] = v;
-      this._persists[k] = PersistFactory(k, ...parameters);
+    for (const [k, class_] of Object.entries(this._persist_class_map)) {
+      this._persists[k] = PersistFactory(k, db, class_);
     }
 
     PersistorSingleton.instance = this;

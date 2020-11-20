@@ -1,5 +1,5 @@
 const { v1: uuid } = require('uuid');
-const { PersistorSingleton } = require('./persist/persist');
+const { PersistorSingleton } = require('./persist');
 
 class BaseEntity {
   static serialize(instance) {
