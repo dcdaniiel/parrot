@@ -1,13 +1,15 @@
-const { RolePersist } = require('./_knex');
+const { RolePersist, UserPersist } = require('./_knex');
 const { PersistorSingleton } = require('./_persist');
+const { db } = require('../../db');
 
 class PersistorProvider {
-  static getPersistor() {
+  static getPersistor(knex = db) {
     if (PersistorProvider.instance) {
       return PersistorProvider.instance;
     }
     return new PersistorSingleton({
-      Role: RolePersist,
+      Role: [RolePersist, knex],
+      User: [UserPersist, knex],
     });
   }
 }

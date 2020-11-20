@@ -17,11 +17,9 @@ class Role extends PersistedEntity {
   static deserialize(serialized) {
     if (serialized) {
       const role = new Role(serialized.name);
-
-      role.id = serialized._id;
-      role.created_at = serialized._created_at;
-      role.updated_at = serialized._updated_at;
-
+      role._id = serialized.id;
+      role._created_at = serialized.created_at;
+      role._updated_at = serialized.updated_at;
       return role;
     }
 

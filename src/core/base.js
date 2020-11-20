@@ -1,5 +1,5 @@
 const { v1: uuid } = require('uuid');
-const { PersistorSingleton } = require('./persist');
+const { PersistorSingleton } = require('./persist/_persist');
 
 class BaseEntity {
   static serialize(instance) {
@@ -72,6 +72,5 @@ class PersistedEntity extends BaseEntity {
 }
 
 module.exports = {
-  BaseEntity,
   PersistedEntity,
 };

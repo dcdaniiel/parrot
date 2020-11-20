@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon src/server",
+    "tests": "jest --runInBand --detectOpenHandles",
     "lint": "eslint --ext .js",
     "lint:fix": "eslint --ext .js --fix"
   },
@@ -26,6 +27,7 @@
     "prettier": "^2.1.2"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "knex": "^0.21.12",
     "pg": "^8.5.1",
