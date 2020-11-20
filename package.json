@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon src/server"
+    "start": "nodemon src/server",
+    "lint": "eslint --ext .js",
+    "lint:fix": "eslint --ext .js --fix"
   },
   "repository": {
     "type": "git",
