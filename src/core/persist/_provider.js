@@ -1,4 +1,10 @@
-const { RolePersist, UserPersist } = require('./_knex');
+const {
+  RolePersist,
+  UserPersist,
+  PersonPersist,
+  LevelPersist,
+} = require('./_knex');
+
 const { PersistorSingleton } = require('./_persist');
 const { db } = require('../../db');
 
@@ -10,6 +16,8 @@ class PersistorProvider {
     return new PersistorSingleton({
       Role: [RolePersist, knex],
       User: [UserPersist, knex],
+      Person: [PersonPersist, knex],
+      Level: [LevelPersist, knex],
     });
   }
 }
