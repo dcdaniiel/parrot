@@ -5,6 +5,7 @@ exports.up = (knex) =>
     table.float('price', 2).notNullable();
     table.float('cost', 2).notNullable();
     table.integer('margin').notNullable();
+    table.timestamps(true, true);
   });
 
 exports.down = (knex) => knex.schema.dropTable('sales');

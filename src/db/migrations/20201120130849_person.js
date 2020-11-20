@@ -8,6 +8,7 @@ exports.up = (knex) =>
     table.timestamp('birthdate').notNullable();
     table.timestamp('start_work').notNullable();
     table.timestamp('end_work').nullable();
+    table.timestamps(true, true);
     table.string('name', 150).notNullable();
     table.integer('age').notNullable();
     table.string('phone', 20).notNullable();
