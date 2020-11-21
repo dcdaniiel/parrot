@@ -3,6 +3,8 @@ const {
   UserPersist,
   PersonPersist,
   LevelPersist,
+  PromotionPersist,
+  BenefitPersist,
 } = require('./_knex');
 
 const { PersistorSingleton } = require('./_persist');
@@ -18,6 +20,8 @@ class PersistorProvider {
       User: [UserPersist, knex],
       Person: [PersonPersist, knex],
       Level: [LevelPersist, knex],
+      Promotion: [PromotionPersist, knex],
+      Benefit: [BenefitPersist, knex],
     });
   }
 }
