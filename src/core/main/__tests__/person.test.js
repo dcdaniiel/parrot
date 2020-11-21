@@ -44,6 +44,7 @@ describe('User', () => {
     person.fdte_email = 'mail@fdte.io';
     person.bitbucket_account = 'bitbucket@com';
     person.kids = false;
+
     await person.save();
 
     const fetched = await Person.fetch(person.id);
