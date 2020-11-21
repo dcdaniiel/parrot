@@ -5,6 +5,7 @@ const {
   LevelPersist,
   PromotionPersist,
   BenefitPersist,
+  DocumentPersist,
 } = require('./_knex');
 
 const { PersistorSingleton } = require('./_persist');
@@ -22,6 +23,7 @@ class PersistorProvider {
       Level: [LevelPersist, knex],
       Promotion: [PromotionPersist, knex],
       Benefit: [BenefitPersist, knex],
+      Document: [DocumentPersist, knex],
     });
   }
 }

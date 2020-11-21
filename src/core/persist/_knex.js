@@ -1,4 +1,12 @@
-const { Role, User, Level, Person, Promotion, Benefit } = require('../main');
+const {
+  Role,
+  User,
+  Level,
+  Person,
+  Promotion,
+  Benefit,
+  Document,
+} = require('../main');
 
 class KnexPersist {
   constructor(db, class_, table) {
@@ -89,6 +97,12 @@ class BenefitPersist extends KnexPersist {
   }
 }
 
+class DocumentPersist extends KnexPersist {
+  constructor(db) {
+    super(db, Document, 'documents');
+  }
+}
+
 module.exports = {
   RolePersist,
   UserPersist,
@@ -96,4 +110,5 @@ module.exports = {
   LevelPersist,
   PromotionPersist,
   BenefitPersist,
+  DocumentPersist,
 };
