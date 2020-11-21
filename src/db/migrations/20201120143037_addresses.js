@@ -1,7 +1,11 @@
 exports.up = (knex) =>
   knex.schema.createTable('addresses', (table) => {
     table.uuid('id').primary();
-    table.uuid('person_id').references('persons.id').notNullable();
+    table
+      .uuid('person_id')
+      .references('persons.id')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
     table.string('street', 150).notNullable();
     table.integer('number', 5).notNullable();
     table.string('country', 50).notNullable();

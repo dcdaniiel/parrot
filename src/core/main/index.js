@@ -5,6 +5,7 @@ const { Level } = require('./level');
 const { Promotion } = require('./promotion');
 const { Benefit } = require('./benefit');
 const { Document } = require('./document');
+const { Address } = require('./address');
 
 module.exports = {
   Role,
@@ -14,4 +15,5 @@ module.exports = {
   Promotion,
   Benefit,
   Document,
+  Address,
 };
