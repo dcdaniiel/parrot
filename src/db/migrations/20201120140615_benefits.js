@@ -4,7 +4,6 @@ exports.up = (knex) =>
     table
       .uuid('person_id')
       .references('persons.id')
-      .nullable()
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
     table.timestamp('month_init').notNullable();
