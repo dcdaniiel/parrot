@@ -1,7 +1,12 @@
 exports.up = (knex) =>
   knex.schema.createTable('banking_accounts', (table) => {
     table.uuid('id').primary();
-    table.uuid('person_id').references('persons.id').notNullable();
+    table
+      .uuid('person_id')
+      .references('persons.id')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+      .notNullable();
     table.string('bank', 100).notNullable();
     table.string('bank_code', 20).notNullable();
     table.string('agency', 20).notNullable();
