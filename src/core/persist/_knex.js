@@ -11,7 +11,7 @@ const {
   Sale,
   Kid,
   BankingAccount,
-} = require('../main');
+} = require('../models');
 
 class KnexPersist {
   constructor(db, class_, table) {

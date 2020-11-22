@@ -1,4 +1,4 @@
-const { Level, Role, Person, User } = require('../../core/main');
+const { Level, Role, Person, User } = require('../../core/models');
 
 const user_fn = (role_id, email, passwd) =>
   User.serialize(new User(role_id, email, passwd));
