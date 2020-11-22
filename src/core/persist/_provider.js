@@ -8,6 +8,7 @@ const {
   DocumentPersist,
   AddressPersist,
   VacationPersist,
+  SalePersist,
 } = require('./_knex');
 
 const { PersistorSingleton } = require('./_persist');
@@ -28,6 +29,7 @@ class PersistorProvider {
       Document: [DocumentPersist, knex],
       Address: [AddressPersist, knex],
       Vacation: [VacationPersist, knex],
+      Sale: [SalePersist, knex],
     });
   }
 }

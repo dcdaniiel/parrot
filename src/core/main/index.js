@@ -7,6 +7,7 @@ const { Benefit } = require('./benefit');
 const { Document } = require('./document');
 const { Address } = require('./address');
 const { Vacation } = require('./vacation');
+const { Sale } = require('./sale');
 
 module.exports = {
   Role,
@@ -18,4 +19,5 @@ module.exports = {
   Document,
   Address,
   Vacation,
+  Sale,
 };

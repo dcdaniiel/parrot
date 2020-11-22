@@ -8,6 +8,7 @@ const {
   Document,
   Address,
   Vacation,
+  Sale,
 } = require('../main');
 
 class KnexPersist {
@@ -112,6 +113,12 @@ class VacationPersist extends KnexPersist {
   }
 }
 
+class SalePersist extends KnexPersist {
+  constructor(db) {
+    super(db, Sale, 'sales');
+  }
+}
+
 module.exports = {
   RolePersist,
   UserPersist,
@@ -122,4 +129,5 @@ module.exports = {
   DocumentPersist,
   AddressPersist,
   VacationPersist,
+  SalePersist,
 };
