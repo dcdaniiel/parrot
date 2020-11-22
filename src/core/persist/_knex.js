@@ -85,11 +85,6 @@ class PromotionPersist extends KnexPersist {
   constructor(db) {
     super(db, Promotion, 'promotions');
   }
-
-  async _create(obj) {
-    console.log(obj);
-    return super._create(obj);
-  }
 }
 
 class BenefitPersist extends KnexPersist {

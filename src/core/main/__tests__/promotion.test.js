@@ -8,7 +8,9 @@ afterAll(async () => {
   await Person.deleteAll();
 });
 
-let user, level, person;
+let user;
+let level;
+let person;
 
 beforeAll(async () => {
   PersistorProvider.getPersistor();
@@ -37,8 +39,6 @@ beforeAll(async () => {
 
 describe('Promotion', () => {
   it('constructor works and save', async () => {
-    console.log('PERSON', person);
-
     const promo = new Promotion(
       person.id,
       level.id,

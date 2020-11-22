@@ -1,5 +1,15 @@
 const { PersistedEntity } = require('../base');
 
+class UserStatus {
+  static ACTIVE() {
+    return 'active';
+  }
+
+  static DISABLED() {
+    return 'disabled';
+  }
+}
+
 class User extends PersistedEntity {
   static getEntityClass() {
     return User;
@@ -14,6 +24,7 @@ class User extends PersistedEntity {
       email: obj._email,
       password: obj._password,
       salt: obj._salt,
+      status: obj._status,
       last_access: obj._last_access,
     };
   }
@@ -30,6 +41,7 @@ class User extends PersistedEntity {
       user._created_at = serialized.created_at;
       user._updated_at = serialized.updated_at;
       user._salt = serialized.salt;
+      user._status = serialized.status;
       user._last_access = serialized.last_access;
 
       return user;
@@ -46,18 +58,26 @@ class User extends PersistedEntity {
     this._password = password;
     this._salt = this._makeSalt();
     this._last_access = new Date();
+    this._status = UserStatus.ACTIVE();
   }
 
   _makeSalt() {
     const length = Math.floor(Math.random() * 50);
-    let salt = '';
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%?';
     const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      salt += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return salt;
+
+    return Array(length)
+      .fill('')
+      .reduce(
+        (acc, _) =>
+          acc + characters.charAt(Math.floor(Math.random() * charactersLength)),
+        ''
+      );
+  }
+
+  set status(status) {
+    this._status = status;
   }
 }
 
