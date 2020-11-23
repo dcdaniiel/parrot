@@ -10,6 +10,9 @@ const { Vacation } = require('./vacation');
 const { Sale } = require('./sale');
 const { Kid } = require('./kids');
 const { BankingAccount } = require('./banking_account');
+const { PersonCompany } = require('./person_company');
+const { Company } = require('./company');
+const { Contract } = require('./contracts');
 
 module.exports = {
   Role,
@@ -24,4 +27,7 @@ module.exports = {
   Sale,
   Kid,
   BankingAccount,
+  PersonCompany,
+  Company,
+  Contract,
 };

@@ -11,6 +11,9 @@ const {
   Sale,
   Kid,
   BankingAccount,
+  PersonCompany,
+  Company,
+  Contract,
 } = require('../models');
 
 class KnexPersist {
@@ -133,6 +136,36 @@ class BankingAccountPersist extends KnexPersist {
   }
 }
 
+class PersonCompanyPersist extends KnexPersist {
+  constructor(db) {
+    super(db, PersonCompany, 'person_companies');
+  }
+}
+
+class CompanyPersist extends KnexPersist {
+  constructor(db) {
+    super(db, Company, 'companies');
+  }
+
+  _create(obj) {
+    return this._db.transaction(async (trx) => {
+      const { person_id, ...company } = obj;
+
+      const [company_id] = await trx(this._table).insert(company, 'id');
+
+      return trx('person_companies').insert(
+        PersonCompany.serialize(new PersonCompany(person_id, company_id))
+      );
+    });
+  }
+}
+
+class ContractPersist extends KnexPersist {
+  constructor(db) {
+    super(db, Contract, 'contracts');
+  }
+}
+
 module.exports = {
   RolePersist,
   UserPersist,
@@ -146,4 +179,7 @@ module.exports = {
   SalePersist,
   KidPersist,
   BankingAccountPersist,
+  PersonCompanyPersist,
+  CompanyPersist,
+  ContractPersist,
 };

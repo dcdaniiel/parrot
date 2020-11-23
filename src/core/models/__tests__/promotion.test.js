@@ -3,9 +3,9 @@ const { User, Role, Person, Level, Promotion } = require('..');
 
 afterAll(async () => {
   const persistor = PersistorProvider.getPersistor();
-  const Person = persistor.getPersistInstance('Person');
+  const person = persistor.getPersistInstance('Person');
 
-  await Person.deleteAll();
+  await person.deleteAll();
 });
 
 let user;

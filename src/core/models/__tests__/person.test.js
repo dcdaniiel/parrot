@@ -3,9 +3,9 @@ const { User, Role, Person, Level } = require('..');
 
 const _clean = async () => {
   const persistor = PersistorProvider.getPersistor();
-  const Person = persistor.getPersistInstance('Person');
+  const person = persistor.getPersistInstance('Person');
 
-  await Person.deleteAll();
+  await person.deleteAll();
 };
 
 beforeEach(async () => {
@@ -16,7 +16,8 @@ afterAll(async () => {
   await _clean();
 });
 
-let user, level;
+let user;
+let level;
 
 beforeAll(async () => {
   await _clean();

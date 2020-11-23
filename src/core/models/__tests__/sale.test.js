@@ -10,8 +10,8 @@ afterAll(async () => {
   const level = persistor.getPersistInstance('Level');
   const sale = persistor.getPersistInstance('Sale');
 
-  // await sale.deleteAll();
-  // await level.deleteAll();
+  await sale.deleteAll();
+  await level.deleteAll();
 });
 
 describe('Sale', () => {

@@ -1,4 +1,3 @@
-// eslint-disable-next-line prettier/prettier
 const { PersistorProvider } = require('../../persist');
 const { User, Role, Person, Level, Vacation } = require('..');
 

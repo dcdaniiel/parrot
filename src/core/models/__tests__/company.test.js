@@ -1,11 +1,15 @@
 const { PersistorProvider } = require('../../persist');
-const { User, Role, Person, Level, Benefit, Document } = require('..');
+const { User, Role, Person, Level, Company } = require('..');
 
 afterAll(async () => {
   const persistor = PersistorProvider.getPersistor();
   const person = persistor.getPersistInstance('Person');
+  const company = persistor.getPersistInstance('Company');
+  const user = persistor.getPersistInstance('User');
 
   await person.deleteAll();
+  await company.deleteAll();
+  await user.deleteAll();
 });
 
 let user;
@@ -16,7 +20,7 @@ beforeAll(async () => {
   PersistorProvider.getPersistor();
 
   const rl = await new Role('ROLE').save();
-  user = await new User(rl.id, 'email', 'password').save();
+  user = await new User(rl.id, 'email@test.com', 'password').save();
   level = await new Level('lvl_name', 800, 250).save();
 
   const person_data = new Person(user.id, level.id, 'name', new Date(), 20);
@@ -37,16 +41,16 @@ beforeAll(async () => {
   person = await person_data.save();
 });
 
-describe('Document', () => {
+describe('Company', () => {
   it('constructor works and save', async () => {
-    const document = new Document(person.id, 'CPF', '11122233300');
+    const company = new Company(person.id, 'CNPJ', 'COMPANY NAME');
 
-    expect(document).toBeInstanceOf(Document);
+    expect(company).toBeInstanceOf(Company);
 
-    await document.save();
+    await company.save();
 
-    const fetched = await Document.fetch(document.id);
+    const fetched = await Company.fetch(company.id);
 
-    expect(fetched.id).toBe(document.id);
+    expect(fetched.id).toBe(company.id);
   });
 });

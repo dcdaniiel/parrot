@@ -11,6 +11,9 @@ const {
   SalePersist,
   KidPersist,
   BankingAccountPersist,
+  PersonCompanyPersist,
+  CompanyPersist,
+  ContractPersist,
 } = require('./_knex');
 
 const { PersistorSingleton } = require('./_persist');
@@ -34,6 +37,9 @@ class PersistorProvider {
       Sale: [SalePersist, knex],
       Kid: [KidPersist, knex],
       BankingAccount: [BankingAccountPersist, knex],
+      PersonCompany: [PersonCompanyPersist, knex],
+      Company: [CompanyPersist, knex],
+      Contract: [ContractPersist, knex],
     });
   }
 }
