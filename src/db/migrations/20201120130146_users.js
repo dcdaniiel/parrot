@@ -7,8 +7,8 @@ exports.up = (knex) =>
       .nullable()
       .onDelete('SET NULL');
     table.string('email', 150).notNullable().unique();
-    table.string('password', 100).notNullable();
-    table.string('salt', 255).notNullable();
+    table.string('password', 255).notNullable();
+    table.string('salt', 255).unique().notNullable();
     table.string('status', 15).notNullable();
     table.timestamp('last_access');
     table.timestamps(true, true);

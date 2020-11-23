@@ -1,3 +1,4 @@
+const bcryptjs = require('bcryptjs');
 const {
   Role,
   User,
@@ -73,6 +74,14 @@ class RolePersist extends KnexPersist {
 class UserPersist extends KnexPersist {
   constructor(db) {
     super(db, User, 'users');
+  }
+
+  async _create(obj) {
+    const given_password = obj.password + obj.salt;
+
+    const password = await bcryptjs.hash(given_password, 10);
+
+    return super._create({ ...obj, password });
   }
 }
 

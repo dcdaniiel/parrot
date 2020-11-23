@@ -6,8 +6,8 @@ const _clean = async () => {
   const role = persistor.getPersistInstance('Role');
   const user = persistor.getPersistInstance('User');
 
-  await user.deleteAll();
-  await role.deleteAll();
+  // await user.deleteAll();
+  // await role.deleteAll();
 };
 
 beforeEach(async () => {
@@ -25,6 +25,7 @@ describe('User', () => {
     expect(user).toBeInstanceOf(User);
 
     await user.save();
+
     const fetched_user = await User.fetch(user.id);
     expect(fetched_user.id).toBe(user.id);
   });
