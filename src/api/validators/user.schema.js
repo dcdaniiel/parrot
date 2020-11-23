@@ -12,6 +12,8 @@ const userSchema = yup.object().shape({
   last_access: yup.date().required(),
 });
 
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
 const userCreate = yup.object().shape({
   role_id: yup.string().uuid(),
   email: yup.string().email().required(),
@@ -25,6 +27,28 @@ const userCreate = yup.object().shape({
       'at least 1 number or special char (@,!,#, etc).'
     )
     .required(),
+  name: yup.string().required(),
+  level_id: yup.string().uuid().required(),
+  birthdate: yup.date().required(),
+  age: yup.number().required(),
+  last_vacation: yup.date().required(),
+  last_promotion: yup.date().required(),
+  start_work: yup.date().required(),
+  end_work: yup.date(),
+  phone: yup
+    .string()
+    .required()
+    .matches(phoneRegExp, 'Phone number is not valid'),
+  emergency_contact: yup
+    .string()
+    .matches(phoneRegExp, 'Emergency contact number is not valid')
+    .required(),
+  ahead_card: yup.string(),
+  current_project: yup.string().required(),
+  person_email: yup.string().email().required().required(),
+  fdte_email: yup.string().email().required(),
+  bitbucket_account: yup.string().required(),
+  kids: yup.bool().required(),
 });
 
 module.exports = { userSchema, userCreate };

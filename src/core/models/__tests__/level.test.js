@@ -5,7 +5,7 @@ const _clean = async () => {
   const persistor = PersistorProvider.getPersistor();
   const lvl = persistor.getPersistInstance('Level');
 
-  await lvl.deleteAll();
+  // await lvl.deleteAll();
 };
 
 beforeEach(async () => {
@@ -18,7 +18,7 @@ afterAll(async () => {
 
 describe('Level', () => {
   it('constructor works and save', async () => {
-    const lvl = new Level('lvl name', 5000, 250);
+    const lvl = new Level('A3', 6427.35, 235);
     expect(lvl).toBeInstanceOf(Level);
 
     await lvl.save();

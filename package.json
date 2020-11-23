@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon src/server",
+    "start": "knex seed:run && nodemon src/server",
+    "migrations": "knex migrate:latest",
     "tests": "jest --runInBand --detectOpenHandles",
     "lint": "eslint --ext .js",
     "lint:fix": "eslint --ext .js --fix"

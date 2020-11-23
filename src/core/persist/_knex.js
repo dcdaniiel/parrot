@@ -81,7 +81,40 @@ class UserPersist extends KnexPersist {
 
     const password = await bcryptjs.hash(given_password, 10);
 
-    return super._create({ ...obj, password });
+    return this._db.transaction(async (trx) => {
+      const { person_data, ...user } = obj;
+      const [user_id] = await trx(this._table).insert(
+        { ...user, password },
+        'id'
+      );
+
+      const personData = new Person(
+        user_id,
+        person_data.level_id,
+        person_data.name,
+        person_data.birthdate,
+        person_data.age
+      );
+
+      personData.last_vacation = person_data.last_vacation;
+      personData.last_promotion = person_data.last_vacation;
+      personData.start_work = person_data.start_work;
+      personData.end_work = person_data.end_work;
+      personData.phone = person_data.phone;
+      personData.emergency_contact = person_data.emergency_contact;
+      personData.ahead_card = person_data.ahead_card;
+      personData.current_project = person_data.current_project;
+      personData.person_email = person_data.person_email;
+      personData.fdte_email = person_data.fdte_email;
+      personData.bitbucket_account = person_data.bitbucket_account;
+      personData.kids = person_data.kids;
+
+      const person = await trx('persons').insert(
+        Person.serialize(personData),
+        '*'
+      );
+      return person;
+    });
   }
 }
 

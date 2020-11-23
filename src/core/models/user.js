@@ -26,6 +26,7 @@ class User extends PersistedEntity {
       salt: obj._salt,
       status: obj._status,
       last_access: obj._last_access,
+      person_data: obj._person_data,
     };
   }
 
@@ -43,6 +44,7 @@ class User extends PersistedEntity {
       user._salt = serialized.salt;
       user._status = serialized.status;
       user._last_access = serialized.last_access;
+      user._person_data = serialized.person_data;
 
       return user;
     }
@@ -78,6 +80,10 @@ class User extends PersistedEntity {
 
   set status(status) {
     this._status = status;
+  }
+
+  set personData(person) {
+    this._person_data = person;
   }
 }
 

@@ -6,16 +6,13 @@ module.exports = function UserService() {
       return { data: await User.fetch(id) };
     },
     async create(body) {
-      const { role_id, email, password } = body;
+      const { role_id, email, password, ...person } = body;
 
-      // eslint-disable-next-line no-unused-vars
-      const { _password, _salt, ...data } = await new User(
-        role_id,
-        email,
-        password
-      ).save();
+      const user = await new User(role_id, email, password);
+      user.personData = person;
+      user.save();
 
-      return { data };
+      return { data: 'User created successfully!' };
     },
   };
 };
