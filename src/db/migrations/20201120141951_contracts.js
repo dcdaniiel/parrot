@@ -1,7 +1,18 @@
 exports.up = (knex) =>
   knex.schema.createTable('contracts', (table) => {
     table.uuid('id').primary();
-    table.uuid('company_id').references('companies.id').notNullable();
+    table
+      .uuid('company_id')
+      .references('companies.id')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+      .notNullable();
+    table
+      .uuid('person_id')
+      .references('persons.id')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+      .notNullable();
     table.timestamp('date_start').notNullable();
     table.timestamp('date_end').notNullable();
     table.string('name', 150).notNullable();

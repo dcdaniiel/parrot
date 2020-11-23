@@ -22,6 +22,8 @@ class Contract extends PersistedEntity {
   static deserialize(serialized) {
     if (serialized) {
       const contract = new Contract(
+        serialized.person_id,
+        serialized.company_id,
         serialized.name,
         serialized.description,
         serialized.salary,
@@ -33,12 +35,27 @@ class Contract extends PersistedEntity {
       contract._id = serialized.id;
       contract._created_at = serialized.created_at;
       contract._updated_at = serialized.updated_at;
+
+      return contract;
     }
+
+    return undefined;
   }
 
-  constructor(name, description, salary, agreement, date_start, date_end) {
+  constructor(
+    person_id,
+    company_id,
+    name,
+    description,
+    salary,
+    agreement,
+    date_start,
+    date_end
+  ) {
     super();
 
+    this._person_id = person_id;
+    this._company_id = company_id;
     this._name = name;
     this._description = description;
     this._salary = salary;

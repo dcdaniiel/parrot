@@ -16,7 +16,7 @@ beforeAll(async () => {
   PersistorProvider.getPersistor();
 
   const rl = await new Role('ROLE').save();
-  user = await new User(rl.id, 'email', 'password').save();
+  user = await new User(rl.id, 'email@benefit', 'password').save();
   level = await new Level('lvl_name', 800, 250).save();
 
   const person_data = new Person(user.id, level.id, 'name', new Date(), 20);

@@ -23,7 +23,7 @@ beforeAll(async () => {
   await _clean();
 
   const rl = await new Role('ROLE').save();
-  user = await new User(rl.id, 'email', 'password').save();
+  user = await new User(rl.id, 'email@person', 'password').save();
   level = await new Level('lvl_name', 800, 250).save();
 });
 

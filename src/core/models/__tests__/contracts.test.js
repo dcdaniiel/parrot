@@ -1,11 +1,19 @@
 const { PersistorProvider } = require('../../persist');
-const { User, Role, Person, Level, Promotion } = require('..');
+const { User, Role, Person, Level, Company, Contract } = require('..');
 
-afterAll(async () => {
+const _clean = async () => {
   const persistor = PersistorProvider.getPersistor();
   const person = persistor.getPersistInstance('Person');
+  const company = persistor.getPersistInstance('Company');
+  const user = persistor.getPersistInstance('User');
 
   await person.deleteAll();
+  await company.deleteAll();
+  await user.deleteAll();
+};
+
+afterAll(async () => {
+  await _clean();
 });
 
 let user;
@@ -13,10 +21,11 @@ let level;
 let person;
 
 beforeAll(async () => {
+  await _clean();
   PersistorProvider.getPersistor();
 
   const rl = await new Role('ROLE').save();
-  user = await new User(rl.id, 'email@promo', 'password').save();
+  user = await new User(rl.id, 'email@contracts.com', 'password').save();
   level = await new Level('lvl_name', 800, 250).save();
 
   const person_data = new Person(user.id, level.id, 'name', new Date(), 20);
@@ -37,22 +46,33 @@ beforeAll(async () => {
   person = await person_data.save();
 });
 
-describe('Promotion', () => {
+describe('Contract', () => {
   it('constructor works and save', async () => {
-    const promo = new Promotion(
+    const company = await new Company(person.id, 'CNPJ', 'COMPANY NAME').save();
+
+    expect(company).toBeInstanceOf(Company);
+
+    const fetched = await Company.fetch(company.id);
+
+    expect(fetched.id).toBe(company.id);
+
+    const contract = new Contract(
       person.id,
-      level.id,
+      company.id,
+      'contract name',
+      'desc',
+      6427.35,
+      'agreement',
       new Date(),
-      6000,
-      'agreement'
+      new Date()
     );
 
-    expect(promo).toBeInstanceOf(Promotion);
+    expect(contract).toBeInstanceOf(Contract);
 
-    await promo.save();
+    await contract.save();
 
-    const fetched = await Promotion.fetch(promo.id);
+    const fetched_contract = await Contract.fetch(contract.id);
 
-    expect(fetched.id).toBe(promo.id);
+    expect(fetched_contract.id).toBe(contract.id);
   });
 });
