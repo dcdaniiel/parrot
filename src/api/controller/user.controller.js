@@ -1,5 +1,5 @@
 const { UserService } = require('../services');
-const { validateSchema } = require('../validators');
+const { validateSchema } = require('../schemas');
 
 module.exports = () => {
   const user = UserService();

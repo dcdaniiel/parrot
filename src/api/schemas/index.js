@@ -1,7 +1,6 @@
-const { userSchema, userCreate } = require('./user.schema');
+const { userCreate } = require('./user.schema');
 
 const schemas = {
-  userSchema,
   userCreate,
 };
 
