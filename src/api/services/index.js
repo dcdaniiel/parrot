@@ -1,3 +1,4 @@
 const UserService = require('./users.service');
+const LevelService = require('./level.service');
 
-module.exports = { UserService };
+module.exports = { UserService, LevelService };
