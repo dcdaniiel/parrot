@@ -83,6 +83,7 @@ class UserPersist extends KnexPersist {
 
     return this._db.transaction(async (trx) => {
       const { person_data, ...user } = obj;
+
       const [user_id] = await trx(this._table).insert(
         { ...user, password },
         'id'

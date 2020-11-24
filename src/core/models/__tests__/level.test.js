@@ -5,7 +5,7 @@ const _clean = async () => {
   const persistor = PersistorProvider.getPersistor();
   const lvl = persistor.getPersistInstance('Level');
 
-  // await lvl.deleteAll();
+  await lvl.deleteAll();
 };
 
 beforeEach(async () => {

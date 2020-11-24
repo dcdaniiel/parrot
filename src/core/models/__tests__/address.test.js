@@ -1,11 +1,17 @@
 const { PersistorProvider } = require('../../persist');
 const { User, Role, Person, Level, Address } = require('..');
 
-afterAll(async () => {
+const _clean = async () => {
   const persistor = PersistorProvider.getPersistor();
   const person = persistor.getPersistInstance('Person');
+  const user = persistor.getPersistInstance('User');
 
+  await user.deleteAll();
   await person.deleteAll();
+};
+
+afterAll(async () => {
+  await _clean();
 });
 
 let user;
@@ -13,28 +19,36 @@ let level;
 let person;
 
 beforeAll(async () => {
+  await _clean();
   PersistorProvider.getPersistor();
 
-  const rl = await new Role('ROLE').save();
-  user = await new User(rl.id, 'email@address', 'password').save();
   level = await new Level('lvl_name', 800, 250).save();
 
-  const person_data = new Person(user.id, level.id, 'name', new Date(), 20);
+  const role = await new Role('role_test').save();
+  user = new User(role.id, 'email', 'passwd');
+  person = new Person(user.id, level.id, 'name', new Date(), 20);
 
-  person_data.last_vacation = new Date();
-  person_data.last_promotion = new Date();
-  person_data.start_work = new Date();
-  person_data.end_work = new Date();
-  person_data.phone = '11111111111';
-  person_data.emergency_contact = '11111111111';
-  person_data.ahead_card = 'AHEAD CARD';
-  person_data.current_project = 'FL';
-  person_data.person_email = 'mail@com';
-  person_data.fdte_email = 'mail@fdte.io';
-  person_data.bitbucket_account = 'bitbucket@com';
-  person_data.kids = false;
+  person.last_vacation = new Date();
+  person.last_promotion = new Date();
+  person.start_work = new Date();
+  person.end_work = new Date();
+  person.phone = '11111111111';
+  person.emergency_contact = '11111111111';
+  person.ahead_card = 'AHEAD CARD';
+  person.current_project = 'FL';
+  person.person_email = 'mail@com';
+  person.fdte_email = 'mail@fdte.io';
+  person.bitbucket_account = 'bitbucket@com';
+  person.kids = false;
 
-  person = await person_data.save();
+  expect(user).toBeInstanceOf(User);
+
+  user.personData = Person.serialize(person);
+  await user.save();
+
+  const [person_data, ...data] = await Person.getPersist().getAll();
+
+  person = person_data;
 });
 
 describe('Address', () => {

@@ -10,9 +10,17 @@ module.exports = function UserService() {
 
       const user = await new User(role_id, email, password);
       user.personData = person;
-      user.save();
 
-      return { data: 'User created successfully!' };
+      const { _id, _email, _created_at } = await user.save();
+
+      return {
+        data: {
+          _id,
+          _email,
+          _name: person.name,
+          _created_at,
+        },
+      };
     },
   };
 };
