@@ -1,6 +1,6 @@
 const { Level } = require('../../core/models');
 
-module.exports = function LevelService() {
+module.exports = () => {
   return {
     async getAll() {
       const data = await Level.getPersist().getAll();

@@ -17,35 +17,20 @@ module.exports = () => {
         ctx.status = 400;
       }
     },
-    async get(ctx) {
-      try {
-        const { id } = ctx.params;
-        ctx.body = await user.get(id);
-      } catch (e) {
-        ctx.body = e.detail;
-        ctx.status = 404;
-      }
-    },
-    async update(ctx) {
+    async login(ctx) {
       try {
         const { body } = ctx.request;
-        const { id } = ctx.params;
 
-        ctx.body = await user.update({ ...body, id });
-        ctx.status = 201;
+        await validateSchema('userLogin', body);
+
+        const { statusCode, data } = await user.login(body);
+
+        ctx.body = { data };
+        ctx.status = statusCode;
       } catch (e) {
-        ctx.body = e.detail;
+        console.log('EERROR:: ', e);
+        ctx.body = e.errors || e.detail;
         ctx.status = 400;
-      }
-    },
-    async del(ctx) {
-      try {
-        const { id } = ctx.params;
-        ctx.body = await user.del(id);
-        ctx.status = 200;
-      } catch (e) {
-        ctx.status = 400;
-        ctx.body = e.detail;
       }
     },
   };

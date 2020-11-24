@@ -48,6 +48,16 @@ class KnexPersist {
     return this._db(this._table).where('id', obj_id).first();
   }
 
+  async findBy(...args) {
+    return this._db(this._table)
+      .where(...args)
+      .first();
+  }
+
+  async filterBy(...args) {
+    return this._db(this._table).where(...args);
+  }
+
   async getAll() {
     return this._db.select('*').from(this._table).orderBy('created_at', 'desc');
   }
@@ -61,7 +71,10 @@ class KnexPersist {
   }
 
   async _update(obj_id, obj) {
-    return this._db(this._table).where('id', obj_id).update(obj);
+    return this._db.transaction(async (trx) => {
+      await trx(this._table).where('id', obj_id).forUpdate();
+      return trx(this._table).where('id', obj_id).update(obj);
+    });
   }
 }
 

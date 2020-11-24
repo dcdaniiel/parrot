@@ -44,6 +44,21 @@ class PersistedEntity extends BaseEntity {
     );
   }
 
+  static async findBy(...args) {
+    const serialized = await this.getPersist().findBy(...args);
+    return this.deserialize(serialized);
+  }
+
+  static async filterBy(...args) {
+    const serialized = await this.getPersist().filterBy(...args);
+    return this.deserialize(serialized);
+  }
+
+  static async getAll() {
+    const serialized = await this.getPersist().getAll();
+    return this.deserialize(serialized);
+  }
+
   static async fetch(...args) {
     const serialized = await this.getPersist().get(...args);
     return this.deserialize(serialized);

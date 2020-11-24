@@ -1,6 +1,7 @@
+const bcryptjs = require('bcryptjs');
 const { User } = require('../../core/models');
 
-module.exports = function UserService() {
+module.exports = () => {
   return {
     async get(id) {
       return { data: await User.fetch(id) };
@@ -20,6 +21,44 @@ module.exports = function UserService() {
           _name: person.name,
           _created_at,
         },
+      };
+    },
+    async login(body) {
+      const { email, password } = body;
+
+      const user = await User.findBy({ email });
+
+      if (user) {
+        const { _salt, _password } = user;
+        const givenPasswd = password + _salt;
+        const password_is_valid = await bcryptjs.compare(
+          givenPasswd,
+          _password
+        );
+
+        if (password_is_valid) {
+          return {
+            data: {
+              message: 'Successfully login!',
+              jwt: '',
+            },
+            statusCode: 200,
+          };
+        }
+
+        return {
+          data: {
+            message: `Password isn't valid!`,
+          },
+          statusCode: 401,
+        };
+      }
+
+      return {
+        data: {
+          message: `Email ${email} not found!`,
+        },
+        statusCode: 404,
       };
     },
   };

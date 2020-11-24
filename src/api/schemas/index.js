@@ -1,7 +1,8 @@
-const { userCreate } = require('./user.schema');
+const { userCreate, userLogin } = require('./user.schema');
 
 const schemas = {
   userCreate,
+  userLogin,
 };
 
 const validateSchema = async (schema, obj) => {
