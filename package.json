@@ -6,7 +6,8 @@
   "scripts": {
     "start": "knex seed:run && nodemon src/server",
     "migrations": "knex migrate:latest",
-    "tests": "jest --runInBand --detectOpenHandles",
+    "test": "jest --runInBand --detectOpenHandles",
+    "test:api": "knex seed:run && jest --runInBand --detectOpenHandles --testPathPattern='./src/api/__tests__/*' ",
     "lint": "eslint --ext .js",
     "lint:fix": "eslint --ext .js --fix"
   },
@@ -31,7 +32,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.6.3",
     "nodemon": "^2.0.6",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "supertest": "^6.0.1"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
