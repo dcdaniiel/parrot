@@ -85,6 +85,10 @@ class User extends PersistedEntity {
   set personData(person) {
     this._person_data = person;
   }
+
+  set last_access(access) {
+    this._last_access = access;
+  }
 }
 
 module.exports = { User };

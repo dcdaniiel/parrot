@@ -1,4 +1,5 @@
 const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { User } = require('../../core/models');
 
 module.exports = () => {
@@ -37,10 +38,20 @@ module.exports = () => {
         );
 
         if (password_is_valid) {
+          user.last_access = new Date();
+          await user.save();
+
           return {
             data: {
               message: 'Successfully login!',
-              jwt: '',
+              token: jwt.sign(
+                {
+                  id: user._id,
+                  type: user._role_id,
+                },
+                process.env.JWT_SECRET,
+                { expiresIn: '6h' }
+              ),
             },
             statusCode: 200,
           };

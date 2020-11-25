@@ -2,6 +2,7 @@ const Koa = require('koa');
 const cors = require('@koa/cors');
 const logger = require('koa-logger');
 const router = require('./routes');
+const { jwtMiddleware, setRole } = require('./middlewares');
 const { PersistorProvider } = require('../core/persist');
 
 const corsOptions = {
@@ -15,23 +16,23 @@ const startServer = async (port = 4000) => {
   app.use(cors(corsOptions));
   app.use(logger());
 
-  PersistorProvider.getPersistor();
+  const persistor = PersistorProvider.getPersistor();
+  const roles = await persistor.getPersistInstance('Role').getAll();
 
+  app.use(async (ctx, next) => {
+    ctx.state.app = {
+      roles: roles.reduce((acc, { id, name }) => ({ ...acc, [id]: name }), {}),
+    };
+    return next();
+  });
   const routes = router({
     corsOptions,
+    middlewares: [jwtMiddleware, setRole],
   });
 
   app.on('error', (err, ctx) => {
-    console.log('Server Error!: ', err, ctx);
+    console.warn('Server Error!: ', err, ctx);
   });
-
-  // app.use(
-  //   jwt({
-  //     secret: process.env.JWT_SECRET,
-  //   }).unless({
-  //     path: [/.*\/auth.*/, /.*\/users.*/],
-  //   })
-  // )
 
   app.use(async (ctx, next) => {
     try {
@@ -49,7 +50,7 @@ const startServer = async (port = 4000) => {
   });
 
   return app.listen(port, () => {
-    console.log(`Parrot server is running\nDate: ${new Date().toISOString()}`);
+    console.log(`Parrot server is running`);
   });
 };
 

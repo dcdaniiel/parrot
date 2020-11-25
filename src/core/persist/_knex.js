@@ -94,11 +94,15 @@ class UserPersist extends KnexPersist {
 
     const password = await bcryptjs.hash(given_password, 10);
 
+    const role_id = obj.role_id
+      ? obj.role_id
+      : (await Role.findBy({ name: 'employee' })).id;
+
     return this._db.transaction(async (trx) => {
       const { person_data, ...user } = obj;
 
       const [user_id] = await trx(this._table).insert(
-        { ...user, password },
+        { ...user, role_id, password },
         'id'
       );
 
