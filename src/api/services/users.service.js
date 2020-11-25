@@ -1,6 +1,6 @@
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { User, Person } = require('../../core/models');
+const { User } = require('../../core/models');
 
 module.exports = () => {
   return {
@@ -8,10 +8,11 @@ module.exports = () => {
       return { data: await User.fetch(id) };
     },
     async create(body) {
-      const { role_id, email, password, ...person } = body;
+      const { role_id, email, password, kids_data, ...person } = body;
 
       const user = await new User(role_id, email, password);
-      user.personData = person;
+      user.person_data = person;
+      user.kids_data = kids_data;
 
       const { _id, _email, _created_at } = await user.save();
 
@@ -30,7 +31,7 @@ module.exports = () => {
       const user = await User.findBy({ email });
 
       if (user) {
-        const { _salt, _password, _id } = user;
+        const { _salt, _password } = user;
         const givenPasswd = password + _salt;
         const password_is_valid = await bcryptjs.compare(
           givenPasswd,

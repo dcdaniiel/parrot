@@ -106,7 +106,7 @@ class UserPersist extends KnexPersist {
       : (await Role.findBy({ name: 'employee' })).id;
 
     return this._db.transaction(async (trx) => {
-      const { person_data, ...user } = obj;
+      const { person_data, kids_data, ...user } = obj;
 
       const [user_id] = await trx(this._table).insert(
         { ...user, role_id, password },
@@ -134,11 +134,19 @@ class UserPersist extends KnexPersist {
       personData.bitbucket_account = person_data.bitbucket_account;
       personData.kids = person_data.kids;
 
-      const person = await trx('persons').insert(
+      const [person_id] = await trx('persons').insert(
         Person.serialize(personData),
-        '*'
+        'id'
       );
-      return person;
+
+      if (person_data.kids) {
+        const kids = kids_data.map((kid) =>
+          Kid.serialize(new Kid(person_id, kid.name, kid.birthdate))
+        );
+        await trx('kids').insert(kids);
+      }
+
+      return 'created!';
     });
   }
 }

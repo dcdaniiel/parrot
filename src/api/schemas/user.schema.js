@@ -37,6 +37,25 @@ const userCreate = yup.object().shape({
   fdte_email: yup.string().email().required(),
   bitbucket_account: yup.string().required(),
   kids: yup.bool().required(),
+  kids_data: yup
+    .array()
+    .of(
+      yup.object({
+        name: yup.string().required(),
+        birthdate: yup.date().required(),
+      })
+    )
+    .when('kids', {
+      is: true,
+      then: yup
+        .array(
+          yup.object({
+            name: yup.string().required(),
+            birthdate: yup.date().required(),
+          })
+        )
+        .required(),
+    }),
 });
 
 const userLogin = yup.object().shape({
