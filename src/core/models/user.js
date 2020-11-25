@@ -82,7 +82,7 @@ class User extends PersistedEntity {
     this._status = status;
   }
 
-  set personData(person) {
+  set person_data(person) {
     this._person_data = person;
   }
 

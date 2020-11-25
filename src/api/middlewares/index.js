@@ -7,11 +7,29 @@ const jwtMiddleware = jwt({
 
 const setRole = async (ctx, next) => {
   const { jwtdata } = ctx.state;
+  let user;
+  try {
+    user = {
+      id: jwtdata.id,
+      role: ctx.state.roles[jwtdata.type],
+    };
+  } catch (e) {
+    user = null;
+  }
 
-  ctx.state.user = {
-    user: jwtdata.id,
-    role: jwtdata.type,
-  };
+  ctx.state.user = user;
+
+  return next();
+};
+
+const handlerUserRole = async (ctx, next) => {
+  const { user } = ctx.state;
+
+  if (!user.role) {
+    ctx.status = 401;
+    ctx.body = 'Unauthorized';
+    return;
+  }
 
   return next();
 };
@@ -19,4 +37,5 @@ const setRole = async (ctx, next) => {
 module.exports = {
   jwtMiddleware,
   setRole,
+  handlerUserRole,
 };

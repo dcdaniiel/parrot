@@ -89,6 +89,13 @@ class UserPersist extends KnexPersist {
     super(db, User, 'users');
   }
 
+  async _update(obj_id, obj) {
+    // eslint-disable-next-line no-unused-vars
+    const { person_data, ...user } = obj;
+
+    return super._update(obj_id, user);
+  }
+
   async _create(obj) {
     const given_password = obj.password + obj.salt;
 

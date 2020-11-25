@@ -1,6 +1,6 @@
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { User } = require('../../core/models');
+const { User, Person } = require('../../core/models');
 
 module.exports = () => {
   return {
@@ -30,7 +30,7 @@ module.exports = () => {
       const user = await User.findBy({ email });
 
       if (user) {
-        const { _salt, _password } = user;
+        const { _salt, _password, _id } = user;
         const givenPasswd = password + _salt;
         const password_is_valid = await bcryptjs.compare(
           givenPasswd,

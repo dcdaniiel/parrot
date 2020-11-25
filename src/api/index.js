@@ -2,7 +2,7 @@ const Koa = require('koa');
 const cors = require('@koa/cors');
 const logger = require('koa-logger');
 const router = require('./routes');
-const { jwtMiddleware, setRole } = require('./middlewares');
+const { jwtMiddleware, setRole, handlerUserRole } = require('./middlewares');
 const { PersistorProvider } = require('../core/persist');
 
 const corsOptions = {
@@ -20,14 +20,15 @@ const startServer = async (port = 4000) => {
   const roles = await persistor.getPersistInstance('Role').getAll();
 
   app.use(async (ctx, next) => {
-    ctx.state.app = {
-      roles: roles.reduce((acc, { id, name }) => ({ ...acc, [id]: name }), {}),
-    };
+    ctx.state.roles = roles.reduce(
+      (acc, { id, name }) => ({ ...acc, [id]: name }),
+      {}
+    );
     return next();
   });
   const routes = router({
     corsOptions,
-    middlewares: [jwtMiddleware, setRole],
+    middlewares: [jwtMiddleware, setRole, handlerUserRole],
   });
 
   app.on('error', (err, ctx) => {

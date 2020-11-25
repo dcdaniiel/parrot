@@ -4,8 +4,8 @@ exports.up = (knex) =>
     table
       .uuid('role_id')
       .references('roles.id')
-      .nullable()
-      .onDelete('SET NULL');
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
     table.string('email', 150).notNullable().unique();
     table.string('password', 255).notNullable();
     table.string('salt', 255).unique().notNullable();
