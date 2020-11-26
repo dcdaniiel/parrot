@@ -32,5 +32,17 @@ module.exports = () => {
         ctx.status = 400;
       }
     },
+    async getAll(ctx) {
+      try {
+        const { statusCode, data } = await user.getAll();
+
+        ctx.body = { data };
+        ctx.status = statusCode;
+      } catch (e) {
+        console.log('ERROR:::', e);
+        ctx.body = e.errors || e.detail;
+        ctx.status = 400;
+      }
+    },
   };
 };

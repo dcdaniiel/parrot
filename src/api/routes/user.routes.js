@@ -6,6 +6,7 @@ module.exports = (opts) => {
   const router = new Router();
 
   router.post('/', user.create);
+  router.get('/', user.getAll);
   router.post('/login', user.login);
 
   return router;

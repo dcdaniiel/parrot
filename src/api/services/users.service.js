@@ -7,6 +7,11 @@ module.exports = () => {
     async get(id) {
       return { data: await User.fetch(id) };
     },
+    async getAll() {
+      const test = await User.getAll();
+      console.log('TESTE:::', test);
+      return { statusCode: 200, data: test };
+    },
     async create(body) {
       const { role_id, email, password, kids_data, ...person } = body;
 
