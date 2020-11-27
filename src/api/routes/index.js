@@ -10,6 +10,5 @@ module.exports = (opts) => {
   router.use('/users', UserRoutes(opts).routes());
   router.use('/levels', LevelRoutes(opts).routes());
   router.use('/promotions', PromotionRoutes(opts).routes());
-
   return [router.routes()];
 };

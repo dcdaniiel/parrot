@@ -8,7 +8,8 @@ module.exports = (opts) => {
 
   ApplyMiddlewares(router, opts.middlewares);
 
-  router.get('/:person_id', promo.get);
+  router.get('/', promo.getAll);
+  router.post('/', promo.create);
 
   return router;
 };

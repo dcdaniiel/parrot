@@ -7,6 +7,7 @@ module.exports = (opts) => {
 
   router.post('/', user.create);
   router.get('/', user.getAll);
+  router.get('/:id', user.get);
   router.post('/login', user.login);
 
   return router;

@@ -5,12 +5,19 @@ const { User } = require('../../core/models');
 module.exports = () => {
   return {
     async get(id) {
-      return { data: await User.fetch(id) };
+      // eslint-disable-next-line no-unused-vars
+      const { _password, _salt, ...data } = await User.fetch(id);
+
+      return {
+        statusCode: 200,
+        data,
+      };
     },
     async getAll() {
-      const test = await User.getAll();
-      console.log('TESTE:::', test);
-      return { statusCode: 200, data: test };
+      return {
+        statusCode: 200,
+        data: await User.getAll(),
+      };
     },
     async create(body) {
       const { role_id, email, password, kids_data, ...person } = body;

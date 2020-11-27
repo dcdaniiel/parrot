@@ -22,6 +22,17 @@ const setRole = async (ctx, next) => {
   return next();
 };
 
+const isAdminRole = async (ctx, next) => {
+  const { user } = ctx.state;
+
+  if (user.role !== 'admin') {
+    ctx.status = 401;
+    ctx.body = 'Unauthorized';
+  }
+
+  return next();
+};
+
 const handlerUserRole = async (ctx, next) => {
   const { user } = ctx.state;
 
@@ -38,4 +49,5 @@ module.exports = {
   jwtMiddleware,
   setRole,
   handlerUserRole,
+  isAdminRole,
 };

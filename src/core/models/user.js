@@ -48,7 +48,9 @@ class User extends PersistedEntity {
       user._status = serialized.status;
       user._last_access = serialized.last_access;
       user._person_data = Person.deserialize(serialized.person_data);
-      user._kids_data = serialized.kids_data.map((kid) => Kid.deserialize(kid));
+      user._kids_data =
+        serialized.kids_data &&
+        serialized.kids_data.map((kid) => Kid.deserialize(kid));
 
       return user;
     }
@@ -76,6 +78,23 @@ class User extends PersistedEntity {
         return this.deserialize(data);
       })
     );
+  }
+
+  static async fetch(...args) {
+    const serialized = await this.getPersist().get(...args);
+    const db = this.getPersist()._db;
+    // eslint-disable-next-line no-unused-vars
+    const { password, salt, ...user } = serialized;
+    const person_data = await db('persons').where({ user_id: user.id }).first();
+    const kids_data = await db('kids').where({ person_id: person_data.id });
+
+    const data = {
+      ...user,
+      person_data,
+      kids_data,
+    };
+
+    return this.deserialize(data);
   }
 
   constructor(role_id, email, password) {

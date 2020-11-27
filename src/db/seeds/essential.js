@@ -10,9 +10,8 @@ exports.seed = async (knex) => {
   if (!verify_exists.length) {
     const admin = role_data('admin');
     const employee = role_data('employee');
-    const manager = role_data('manager');
 
-    await knex('roles').insert([admin, employee, manager]);
+    await knex('roles').insert([admin, employee]);
 
     const A1 = level_data('A1', 4500, 215);
     const A2 = level_data('A2', 5500, 215);
@@ -28,8 +27,6 @@ exports.seed = async (knex) => {
     const C3 = level_data('C3', 14000, 800);
     const C4 = level_data('C4', 15000, 800);
     const C5 = level_data('C5', 16000, 800);
-
-    const D1 = level_data('D1', 20000, 1000);
 
     await knex('levels').insert([
       A1,
