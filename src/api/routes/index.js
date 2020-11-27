@@ -14,5 +14,10 @@ module.exports = (opts) => {
   router.use('/promotions', PromotionRoutes(opts).routes());
   router.use('/benefits', BenefitsRoutes(opts).routes());
   router.use('/documents', DocumentsRoutes(opts).routes());
+
+  router.get('/health', (ctx, next) => {
+    ctx.body = { status: 'UP' };
+    ctx.status = 200;
+  });
   return [router.routes()];
 };

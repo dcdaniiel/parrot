@@ -4,6 +4,7 @@ const logger = require('koa-logger');
 const router = require('./routes');
 const { jwtMiddleware, setRole, handlerUserRole } = require('./middlewares');
 const { PersistorProvider } = require('../core/persist');
+const { ui, validate } = require('./swagger');
 
 const corsOptions = {
   origin: '*',
@@ -15,6 +16,8 @@ const startServer = async (port = 4000) => {
   const app = new Koa();
   app.use(cors(corsOptions));
   app.use(logger());
+  app.use(ui);
+  app.use(validate);
 
   const persistor = PersistorProvider.getPersistor();
   const roles = await persistor.getPersistInstance('Role').getAll();
