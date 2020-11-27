@@ -22,6 +22,20 @@ module.exports = () => {
       return { statusCode: 200, data };
     },
     async create(body) {
+      const exists = await Promotion.findBy({
+        level_id: body.level_id,
+        person_id: body.person_id,
+      });
+
+      if (exists) {
+        return {
+          statusCode: 409,
+          data: {
+            message: 'This promotion already exists',
+          },
+        };
+      }
+
       return {
         statusCode: 201,
         data: await new Promotion(
