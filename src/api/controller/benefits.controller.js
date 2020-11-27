@@ -1,12 +1,12 @@
-const { PromotionService } = require('../services');
+const { BenefitsService } = require('../services');
 const { validateSchema } = require('../schemas');
 
 module.exports = () => {
-  const promo = PromotionService();
+  const benefits = BenefitsService();
   return {
     async getAll(ctx) {
       try {
-        const { statusCode, data } = await promo.getAll();
+        const { statusCode, data } = await benefits.getAll();
         ctx.body = data;
         ctx.status = statusCode;
       } catch (e) {
@@ -17,7 +17,7 @@ module.exports = () => {
     async get(ctx) {
       try {
         const { id } = ctx.params;
-        const { statusCode, data } = await promo.get(id);
+        const { statusCode, data } = await benefits.get(id);
         ctx.body = data;
         ctx.status = statusCode;
       } catch (e) {
@@ -29,9 +29,9 @@ module.exports = () => {
       try {
         const { body } = ctx.request;
 
-        await validateSchema('promotionCreate', body);
+        await validateSchema('benefitsCreate', body);
 
-        const { statusCode, data } = await promo.create(body);
+        const { statusCode, data } = await benefits.create(body);
 
         ctx.body = data;
         ctx.status = statusCode;

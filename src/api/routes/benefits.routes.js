@@ -1,16 +1,16 @@
 const Router = require('koa-router');
-const { PromotionController } = require('../controller');
+const { BenefitsController } = require('../controller');
 const { ApplyMiddlewares } = require('../utils');
 
 module.exports = (opts) => {
-  const promo = PromotionController();
+  const benefit = BenefitsController();
   const router = new Router();
 
   ApplyMiddlewares(router, opts.middlewares);
 
-  router.get('/', promo.getAll);
-  router.post('/', promo.create);
-  router.get('/:id', promo.get);
+  router.get('/', benefit.getAll);
+  router.post('/', benefit.create);
+  router.get('/:id', benefit.get);
 
   return router;
 };

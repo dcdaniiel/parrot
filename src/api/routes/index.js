@@ -3,6 +3,7 @@ const bodyParser = require('koa-bodyparser');
 const UserRoutes = require('./user.routes');
 const LevelRoutes = require('./level.routes');
 const PromotionRoutes = require('./promotions.routes');
+const BenefitsRoutes = require('./benefits.routes');
 
 module.exports = (opts) => {
   const router = Router({ prefix: '/api' });
@@ -10,5 +11,6 @@ module.exports = (opts) => {
   router.use('/users', UserRoutes(opts).routes());
   router.use('/levels', LevelRoutes(opts).routes());
   router.use('/promotions', PromotionRoutes(opts).routes());
+  router.use('/benefits', BenefitsRoutes(opts).routes());
   return [router.routes()];
 };

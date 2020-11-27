@@ -8,7 +8,7 @@ class Benefit extends PersistedEntity {
   static serialize(benefit) {
     return {
       id: benefit._id,
-      person_id: benefit.person_id,
+      person_id: benefit._person_id,
       month_init: benefit._month_init,
       month_end: benefit._month_end,
       value: benefit._value,
