@@ -23,6 +23,90 @@ paths:
             $ref: "#/definitions/Health"
         500:
           $ref: '#/responses/500'
+  /users:
+    post:
+      summary: "create a user"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        201:
+          description: "user created"
+          schema:
+            $ref: "#/definitions/User"
+
+        204:
+          description: "request accepted but don't have user registered"
+          schema:
+            $ref: "#/definitions/NoContent"
+
+        500:
+          $ref: '#/responses/500'
+    get:
+      summary: "List all users"
+      description: "List of users"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "list users"
+          schema:
+            type: 'array'
+            items:
+              $ref: "#/definitions/User"
+
+        204:
+          description: "request accepted but don't have user registered"
+          schema:
+            $ref: "#/definitions/NoContent"
+
+        500:
+          $ref: '#/responses/500'
+  /users/{id}:
+    get:
+      summary: "Get a user"
+      description: "Get a user"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Get a user"
+          schema:
+            $ref: "#/definitions/User"
+
+
+        204:
+          description: "request accepted but don't have user registered"
+          schema:
+            $ref: "#/definitions/NoContent"
+
+        500:
+          $ref: '#/responses/500'
+  /users/login:
+    post:
+      summary: "Login"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Login user"
+          schema:
+            type: 'object'
+            properties:
+              email:
+                type: 'string'
+                format: 'email'
+              password:
+                type: 'string'
+        500:
+          $ref: '#/responses/500'
 
 responses:
   500:
@@ -37,6 +121,9 @@ definitions:
       message:
         type: "string"
 
+  NoContent:
+    type: ""
+
   Health:
     type: "object"
     properties:
@@ -45,3 +132,66 @@ definitions:
         enum:
           - "UP"
           - "DOWN"
+  User:
+    type: "object"
+    properties:
+      role_id:
+        type: 'string'
+        format: 'uuid'
+      email:
+        type: 'string'
+        format: 'email'
+      password:
+        type: 'string'
+      name:
+        type: 'string'
+      level_id:
+        type: 'string'
+        format: 'uuid'
+      birthdate:
+        type: 'string'
+        format: 'date-time'
+      age:
+        type: 'number'
+      last_vacation:
+        type: 'string'
+        format: 'date-time'
+      last_promotion:
+        type: 'string'
+        format: 'date-time'
+      start_work:
+        type: 'string'
+        format: 'date-time'
+      end_work:
+        type: 'string'
+        format: 'date-time'
+      phone:
+        type: 'string'
+        format: 'phone'
+      emergency_contact:
+        type: 'string'
+      ahead_card:
+        type: 'string'
+      current_project:
+        type: 'string'
+      person_email:
+        type: 'string'
+        format: 'email'
+      fdte_email:
+        type: 'string'
+        format: 'email'
+      bitbucket_account:
+        type: 'string'
+        format: 'email'
+      kids:
+        type: 'boolean'
+      kids_data:
+        type: 'array'
+        items:
+          type: 'object'
+          properties:
+            name:
+              type: 'string'
+            birthdate:
+              type: 'string'
+              format: 'date-time'
