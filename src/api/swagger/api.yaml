@@ -4,7 +4,7 @@ info:
   description: >
     Koa Api.
   version: "1.0.0"
-host: "localhost:4000"
+host: "localhost:4000/api"
 schemes:
   - "http"
 paths:
@@ -71,7 +71,7 @@ paths:
 
         500:
           $ref: '#/responses/500'
-  /users/{id}:
+  /users/id:
     get:
       summary: "Get a user"
       description: "Get a user"
@@ -133,6 +133,157 @@ paths:
             type: 'array'
             items:
               $ref: '#/definitions/Level'
+        500:
+          $ref: '#/responses/500'
+  /promotions:
+    get:
+      summary: "List promotions"
+      tags:
+        - promotions
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Promotion"
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Promotion'
+        500:
+          $ref: '#/responses/500'
+    post:
+      tags:
+        - promotions
+      summary: "create a promotion"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        201:
+          schema:
+            $ref: "#/definitions/Promotion"
+
+        500:
+          $ref: '#/responses/500'
+  /promotions/id:
+    get:
+      summary: "get a promotion"
+      tags:
+        - promotions
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Promotion"
+          schema:
+            $ref: "#/definitions/Promotion"
+
+        500:
+          $ref: '#/responses/500'
+  /benefits:
+    get:
+      summary: "List benefits"
+      tags:
+        - benefits
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Benefit"
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Benefit'
+        500:
+          $ref: '#/responses/500'
+    post:
+      tags:
+        - benefits
+      summary: "create a benefit"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        201:
+          schema:
+            $ref: "#/definitions/Benefit"
+
+        500:
+          $ref: '#/responses/500'
+  /benefits/id:
+    get:
+      summary: "get a benefit"
+      tags:
+        - benefits
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Benefit"
+          schema:
+            $ref: "#/definitions/Benefit"
+
+        500:
+          $ref: '#/responses/500'
+
+  /documents:
+    get:
+      summary: "List documents"
+      tags:
+        - documents
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Document"
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/Document'
+        500:
+          $ref: '#/responses/500'
+    post:
+      tags:
+        - documents
+      summary: "create a document"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        201:
+          schema:
+            $ref: "#/definitions/Document"
+
+        500:
+          $ref: '#/responses/500'
+  /documents/id:
+    get:
+      summary: "get a document"
+      tags:
+        - documents
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Document"
+          schema:
+            $ref: "#/definitions/Document"
+
         500:
           $ref: '#/responses/500'
 
@@ -232,4 +383,51 @@ definitions:
       salary:
         type: 'number'
       benefit_value:
+        type: 'number'
+  Promotion:
+    type: 'object'
+    properties:
+      person_id:
+        type: 'string'
+        format: 'uuid'
+      level_id:
+        type: 'string'
+        format: 'uuid'
+      date:
+        type: 'string'
+        format: 'date-time'
+      value:
+        type: 'number'
+      agreement:
+        type: 'string'
+  Document:
+    type: 'object'
+    properties:
+      person_id:
+        type: 'string'
+        format: 'uuid'
+      type:
+        type: 'string'
+      number_doc:
+        type: 'string'
+  Benefit:
+    type: 'object'
+    properties:
+      person_id:
+        type: 'string'
+        format: 'uuid'
+      level_id:
+        type: 'string'
+        format: 'uuid'
+      month_init:
+        type: 'string'
+        format: 'date-time'
+      month_end:
+        type: 'string'
+        format: 'date-time'
+      value:
+        type: 'number'
+      receipt:
+        type: 'string'
+      parcel:
         type: 'number'
