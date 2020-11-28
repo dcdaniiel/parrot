@@ -17,7 +17,6 @@ const startServer = async (port = 4000) => {
   app.use(cors(corsOptions));
   app.use(logger());
   app.use(ui);
-  app.use(validate);
 
   const persistor = PersistorProvider.getPersistor();
   const roles = await persistor.getPersistInstance('Role').getAll();
