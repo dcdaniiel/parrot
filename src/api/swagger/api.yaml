@@ -95,6 +95,26 @@ paths:
 
         500:
           $ref: '#/responses/500'
+    delete:
+      summary: "Delete a user"
+      description: "Delete a user"
+      tags:
+        - users
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Delete a user"
+          schema:
+            type: 'object'
+            properties:
+              message:
+                type: 'string'
+
+        500:
+          $ref: '#/responses/500'
   /users/login:
     post:
       summary: "Login"

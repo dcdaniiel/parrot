@@ -5,12 +5,35 @@ const { User } = require('../../core/models');
 module.exports = () => {
   return {
     async get(id) {
-      // eslint-disable-next-line no-unused-vars
-      const { _password, _salt, ...data } = await User.fetch(id);
+      const data = await User.fetch(id);
+
+      if (!data) {
+        return {
+          statusCode: 404,
+          data,
+        };
+      }
 
       return {
         statusCode: 200,
         data,
+      };
+    },
+    async del(id) {
+      const user = await User.fetch(id);
+
+      if (!user) {
+        return {
+          statusCode: 404,
+          data: {
+            message: 'User not found!',
+          },
+        };
+      }
+
+      return {
+        statusCode: 200,
+        data: await User.delete(id),
       };
     },
     async getAll() {

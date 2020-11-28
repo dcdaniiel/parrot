@@ -82,19 +82,26 @@ class User extends PersistedEntity {
 
   static async fetch(...args) {
     const serialized = await this.getPersist().get(...args);
-    const db = this.getPersist()._db;
-    // eslint-disable-next-line no-unused-vars
-    const { password, salt, ...user } = serialized;
-    const person_data = await db('persons').where({ user_id: user.id }).first();
-    const kids_data = await db('kids').where({ person_id: person_data.id });
 
-    const data = {
-      ...user,
-      person_data,
-      kids_data,
-    };
+    if (serialized) {
+      const db = this.getPersist()._db;
+      // eslint-disable-next-line no-unused-vars
+      const { password, salt, ...user } = serialized;
+      const person_data = await db('persons')
+        .where({ user_id: user.id })
+        .first();
+      const kids_data = await db('kids').where({ person_id: person_data.id });
 
-    return this.deserialize(data);
+      const data = {
+        ...user,
+        person_data,
+        kids_data,
+      };
+
+      return this.deserialize(data);
+    }
+
+    return undefined;
   }
 
   constructor(role_id, email, password) {

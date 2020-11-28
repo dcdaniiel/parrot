@@ -13,6 +13,7 @@ module.exports = (opts) => {
 
   router.get('/', user.getAll);
   router.get('/:id', user.get);
+  router.del('/:id', user.del);
 
   return router;
 };

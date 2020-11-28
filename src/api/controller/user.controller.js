@@ -57,5 +57,19 @@ module.exports = () => {
         ctx.status = 400;
       }
     },
+
+    async del(ctx) {
+      try {
+        const { id } = ctx.params;
+        const { statusCode, data } = await user.del(id);
+
+        ctx.body = { data };
+        ctx.status = statusCode;
+      } catch (e) {
+        console.log('ERROR:::', e);
+        ctx.body = e.errors || e.detail;
+        ctx.status = 400;
+      }
+    },
   };
 };
